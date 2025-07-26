@@ -1,0 +1,11 @@
+Recovery Metrics Summary:
+----------------------------
+Original total files         : 457
+Simulated (keep/deleted/corrupted): 321 / 91 / 45
+
+Recovered from keep          : 321 of 321 (100,0%)
+Recovered from deleted       : 0 of 91 (0,0%)
+Recovered from corrupted     : 45 of 45 (100,0%)
+
+Total recovered from simulated: 366 of 457 (80,1%)
+Total recovered from original : 457 of 457 (100,0%)

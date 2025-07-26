@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # simulate_deletion_and_corruption.sh
-# Randomly deletes and corrupts files in mounted images, but does NOT modify original manifests.
+# Randomly deletes and corrupts files in mounted images and generates hashed simulated manifests.
+# Prints used disk space before and after modifications.
 
 set -euo pipefail
 
@@ -29,6 +30,8 @@ for size in 100MB 1GB 5GB; do
     echo "Skipping $size_lower (not mounted or manifest missing)"
     continue
   fi
+
+  echo "Used space before: $(sudo du -sh "$mnt" | cut -f1)"
 
   # Copy manifest to simulate modifications
   cp "$orig_manifest" "$temp_manifest"
@@ -64,6 +67,24 @@ for size in 100MB 1GB 5GB; do
     fi
   done
 
+  # Recompute hashes
+  echo "image,size,file_path,action,hash" > "$temp_manifest.tmp"
+  while IFS=, read -r image size path action _; do
+    full_path="$mnt$path"
+    if [[ "$path" == "file_path" ]]; then continue; fi
+
+    if [[ -f "$full_path" ]]; then
+      hash=$(sha256sum "$full_path" | cut -d ' ' -f 1)
+    else
+      hash=""
+    fi
+    echo "$image,$size,$path,$action,$hash" >> "$temp_manifest.tmp"
+  done < "$temp_manifest"
+
+  mv "$temp_manifest.tmp" "$temp_manifest"
+
+  echo "Used space after:  $(sudo du -sh "$mnt" | cut -f1)"
+  echo ""
 done
 
-echo "Done simulating deletions and corruption. New manifests written to $temp_manifest_dir"
+echo "Done simulating deletions and corruption. Hashed manifests written to $temp_manifest_dir"

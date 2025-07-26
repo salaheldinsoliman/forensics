@@ -1,3 +1,7 @@
 data/
 recovery_tools/photorec/recovered
 /images
+mnt
+recovery_tools/sleuthkit/100mb
+recovery_tools/sleuthkit/1gb
+recovery_tools/sleuthkit/5gb
