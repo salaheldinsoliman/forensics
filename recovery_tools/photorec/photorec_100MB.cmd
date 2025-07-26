@@ -1,0 +1,15 @@
+search
+/dev/loop0
+options
+paranoid
+keep_corrupted_file
+fileopt
+enable
+quit
+partition_none
+ext2/ext3
+whole
+dir
+/home/sesa/forensics/recovery_tools/photorec/recovered/100MB
+search
+quit
