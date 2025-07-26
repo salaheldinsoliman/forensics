@@ -193,6 +193,3 @@ The verification script reports:
 ## License
 
 MIT License. For research and evaluation use.
-
-```
-```
