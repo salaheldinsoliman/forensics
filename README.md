@@ -87,8 +87,6 @@ Includes: file path, hash, and action (default = keep)
 
 ---
 
-## Simulation: Deletion and Corruption
-
 ### `simulate_deletion_and_corruption.sh`
 
 * Randomly deletes and corrupts a % of files in each mounted image
@@ -101,33 +99,6 @@ Modified manifests are written to:
 ```
 ~/forensics/manifests_simulated/
 ```
-
----
-
-## Recovery and Evaluation
-
-### `recover_with_tsk.sh`
-
-* Recovers files from each `.img` using Sleuth Kit (`tsk_recover`)
-* Stores them under:
-
-  ```
-  ~/forensics/recovery_tools/sleuthkit/100mb/
-  ```
-* Generates a new manifest for each recovered image
-
----
-
-### PhotoRec recovery
-
-If using PhotoRec, follow its CLI to recover into:
-
-```
-~/forensics/recovery_tools/photorec/100mb/
-```
-
-Then generate a manifest using the same format.
-
 ---
 
 ### `verify_recovery_result.sh`
@@ -149,6 +120,37 @@ Outputs:
 
 ---
 
+
+## Recovery and Evaluation
+
+### Sleuthkit Recovery
+
+* Recovers files from each `.img` using Sleuth Kit (`tsk_recover`)
+* Stores them under:
+
+  ```
+  ~/forensics/recovery_tools/sleuthkit/100mb/
+  ```
+* Generates a new manifest for each recovered image
+
+---
+
+### PhotoRec recovery
+
+If using PhotoRec, follow its CLI to recover into:
+
+```
+~/forensics/recovery_tools/photorec/100mb/
+```
+
+Then generate a manifest using the same format.
+
+### Scalpel
+If using Scalpel, navigate to `/recovery_tools/scalpel`
+Run `./recover_with_scalpel`
+
+
+
 ## Running the Full Experiment
 
 ```bash
@@ -163,7 +165,7 @@ Outputs:
 # Step 3: Simulate file loss
 ./scripts/simulate_deletion_and_corruption.sh
 
-# Step 4: Recover using Sleuth Kit
+# Step 4: Recover using Sleuth Kit (or scalpel or PhotoRec)
 cd ~/forensics/recovery_tools/sleuthkit
 ./recover_with_tsk.sh
 
@@ -174,7 +176,7 @@ cd ~/forensics/recovery_tools/sleuthkit
   ~/forensics/recovery_tools/sleuthkit/manifest_100mb.csv
 ```
 
-Repeat for 1GB and 5GB images.
+Repeat for 1GB and 5GB images. And for reach recovery tool.
 
 ---
 
